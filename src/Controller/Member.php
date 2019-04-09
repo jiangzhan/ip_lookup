@@ -50,11 +50,9 @@ class Member extends ControllerBase {
       ),
       '#rows' => $rows,
     );
-    $output[] = array('#theme' => 'pager');
+    $output[] = array('#type' => 'pager');
     $output[] = array(
-      '#attached' => array(
-        'library' => array('member_login/member_login'),
-      ),
+      '#attached' => array('library' => array('member_login/member_login')),
     );
     return $output;
   }

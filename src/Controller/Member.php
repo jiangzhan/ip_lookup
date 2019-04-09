@@ -29,9 +29,9 @@ class Member extends ControllerBase {
 
   public function list() {
     $data = $this->member_get_result();
-    $rows = array();
+    $rows = [];
     foreach($data AS $value) {
-      $class = $this->currentUser->id() == $value->uid ? 'current-member-login' : ' '; 
+      $class = $this->currentUser->id() == $value->uid ? 'current-member-login' : ''; 
       $rows[] = array(
         'data' => array(
           $value->username, $value->uid, date("F j, Y, g:i a",$value->date)

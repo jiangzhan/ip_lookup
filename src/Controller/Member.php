@@ -31,16 +31,13 @@ class Member extends ControllerBase {
     $data = $this->member_get_result();
     $rows = array();
     foreach($data AS $value) {
-      if ($this->currentUser->id() == $value->uid ) {
-        $rows[] = array(
-          'data' => array(
-            $value->username, $value->uid, date("F j, Y, g:i a",$value->date)
-          ), 
-          'class' => array('current-member-login')
-        );
-      } else {
-        $rows[] = array($value->username, $value->uid, date("F j, Y, g:i a",$value->date));
-      }
+      $class = $this->currentUser->id() == $value->uid ? 'current-member-login' : ' '; 
+      $rows[] = array(
+        'data' => array(
+          $value->username, $value->uid, date("F j, Y, g:i a",$value->date)
+        ), 
+        'class' => array($class),
+      );
     }
 
     $output = [];

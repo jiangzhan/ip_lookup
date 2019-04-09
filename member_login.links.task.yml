@@ -1,0 +1,5 @@
+member_login.member_login:
+  route_name: member_login.member_login
+  title: Member Login
+  base_route: entity.user.collection
+  weight: 200

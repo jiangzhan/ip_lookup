@@ -1,0 +1,4 @@
+services:  
+  member_login:
+    class: Drupal\member_login\Controller\Member
+    arguments: ['@current_user', '@database'] 

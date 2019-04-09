@@ -1,0 +1,8 @@
+member_login.member_login:
+  path: 'admin/people/member-lgoin'
+  defaults:
+    _title: 'Member Login'
+    _controller: '\Drupal\member_login\Controller\Member::list'
+  requirements:
+    _permission: 'access administration pages'
+    _format: 'html'

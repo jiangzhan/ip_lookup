@@ -1,0 +1,26 @@
+<?php
+/**
+ * @file
+ * The main module file.
+ */
+
+ /**
+ * Implements hook_user_login().
+ */
+
+function member_login_user_login($account) {
+  $keys = [
+    'mlid' => null,
+  ];
+  $fields = [
+    'uid' => $account->id(),
+    'date' => time(),
+    'username'=> $account->getDisplayName(),
+  ];
+
+  \Drupal::database()->merge('member_login')
+    ->key($keys)
+    ->fields($fields)
+    ->execute();
+}
+

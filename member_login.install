@@ -1,0 +1,42 @@
+<?php
+/**
+ * implements hook_schema()
+ */
+function member_login_schema() {
+  $schema['member_login'] = array(
+    'description' => 'a table for member list',
+    'fields' => array(
+      'mlid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+      'username' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'date' => array(
+        'description' => 'The Unix timestamp when the user logged in.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),    
+    'primary key' => array('mlid'),
+  );
+  return $schema;
+} 

@@ -31,29 +31,39 @@ class Member extends ControllerBase {
     $data = $this->member_get_result();
     $rows = array();
     foreach($data AS $value) {
-      $rows[] = array($value->username, $value->uid, date("F j, Y, g:i a",$value->date));
+      if ($this->currentUser->id() == $value->uid ) {
+        $rows[] = array(
+          'data' => array(
+            $value->username, $value->uid, date("F j, Y, g:i a",$value->date)
+          ), 
+          'class' => array('current-member-login')
+        );
+      } else {
+        $rows[] = array($value->username, $value->uid, date("F j, Y, g:i a",$value->date));
+      }
     }
-    $output = array(
-      array(
-        '#theme' => 'table',
-        '#header'=> array(
-          array('data' => 'Account Name', 'field' => 'username'),
-          array('data' => 'Uid', 'field' => 'uid'),
-          array('data' => 'Time', 'field' => 'date'),
-        ),
-        '#rows' => $rows,
+
+    $output = [];
+    $output[] = array(
+      '#theme' => 'table',
+      '#header' => array(
+        array('data' => 'Account Name', 'field' => 'username'),
+        array('data' => 'Uid', 'field' => 'uid'),
+        array('data' => 'Time', 'field' => 'date'),
       ),
-      array('#theme'=> 'pager'),
+      '#rows' => $rows,
+    );
+    $output[] = array('#theme' => 'pager');
+    $output[] = array(
+      '#attached' => array(
+        'library' => array('member_login/member_login'),
+      ),
     );
     return $output;
   }
   
   public function member_get_result() {
-    $header = array(
-      array('data' => 'Account Name', 'field' => 'username'),
-      array('data' => 'Uid', 'field' => 'uid'),
-      array('data' => 'Time', 'field' => 'date'),
-    );
+
     $query = $this->connection->select('member_login', 'm')
       ->fields('m', array());
 

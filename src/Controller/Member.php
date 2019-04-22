@@ -28,7 +28,12 @@ class Member extends ControllerBase {
   }
 
   public function list() {
-    $data = $this->member_get_result();
+    $header = array(
+      array('data' => 'Account Name', 'field' => 'username'),
+      array('data' => 'Uid', 'field' => 'uid'),
+      array('data' => 'Time', 'field' => 'date', 'sort' => 'desc'),
+    );
+    $data = $this->member_get_result($header);
     $rows = [];
     foreach($data AS $value) {
       $class = $this->currentUser->id() == $value->uid ? 'current-member-login' : ''; 
@@ -43,11 +48,7 @@ class Member extends ControllerBase {
     $output = [];
     $output[] = array(
       '#theme' => 'table',
-      '#header' => array(
-        array('data' => 'Account Name', 'field' => 'username'),
-        array('data' => 'Uid', 'field' => 'uid'),
-        array('data' => 'Time', 'field' => 'date'),
-      ),
+      '#header' => $header,
       '#rows' => $rows,
     );
     $output[] = array('#type' => 'pager');
@@ -57,10 +58,15 @@ class Member extends ControllerBase {
     return $output;
   }
   
-  public function member_get_result() {
+  public function member_get_result($header = array()) {
 
     $query = $this->connection->select('member_login', 'm')
-      ->fields('m', array());
+      ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
+      ->extend('\Drupal\Core\Database\Query\TableSortExtender');
+    $query = $query
+      ->fields('m', array())
+      ->limit(30)
+      ->orderByHeader($header);
 
     $resource = $query->execute();
     $result = $resource->fetchAll();

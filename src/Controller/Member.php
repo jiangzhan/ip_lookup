@@ -7,27 +7,56 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Session\AccountProxy;
 
+/**
+ * Provides the member login page.
+ */
+
 class Member extends ControllerBase {
   
   /**
-   * DependencyInjection @current_user @database service here.
+   * The current user.
+   *
+   * @var Drupal\Core\Session\AccountProxy;
    */
   protected $currentUser;
+
+  /**
+   * The database connection.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
   protected $connection;
+  
+  /**
+   * Constructs a current user object.
+   *
+   * @para Drupal\Core\Session\AccountProxy $currentUser
+   *   A current user.
+   * @param \Drupal\Core\Database\Connection $connection
+   *   A database connection for reading member_lgoin tabel.
+   */
 
   public function __construct( AccountProxy $currentUser, Connection $connection ) {
     $this->currentUser = $currentUser;
     $this->connection  = $connection;
   }
-
+  
+  /**
+   * {@inheritdoc}
+   */
   public static function create( ContainerInterface $container ) {
     return new static(
       $container->get('current_user'),
       $container->get('database')
     );
   }
+  
+  /**
+   * A simple controller method to print member login table.
+   */
 
   public function list() {
+    // We are going to output the results in a table with a nice header. 
     $header = array(
       array('data' => 'Account Name', 'field' => 'username'),
       array('data' => 'Uid', 'field' => 'uid'),

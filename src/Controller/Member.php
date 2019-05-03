@@ -89,7 +89,7 @@ class Member extends ControllerBase {
   /**
    * Query the table.
    *
-   * @parm array $header
+   * @param array $header
    * The table header.
    */ 
   public function member_get_result($header = []) {

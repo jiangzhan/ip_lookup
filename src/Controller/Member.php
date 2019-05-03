@@ -56,37 +56,42 @@ class Member extends ControllerBase {
    */
 
   public function list() {
-    // We are going to output the results in a table with a nice header. 
-    $header = array(
-      array('data' => 'Account Name', 'field' => 'username'),
-      array('data' => 'Uid', 'field' => 'uid'),
-      array('data' => 'Time', 'field' => 'date', 'sort' => 'desc'),
-    );
+    $header = [
+      ['data' => $this->t('Account Name'), 'field' => 'm.username'],
+      ['data' => $this->t('Uid'), 'field' => 'm.uid'],
+      ['data' => $this->t('Time'), 'field' => 'm.date', 'sort' => 'desc'],
+    ];
     $data = $this->member_get_result($header);
+
     $rows = [];
     foreach($data AS $value) {
       $class = $this->currentUser->id() == $value->uid ? 'current-member-login' : ''; 
-      $rows[] = array(
-        'data' => array(
+      $rows[] = [
+        'data' => [
           $value->username, $value->uid, date("F j, Y, g:i a",$value->date)
-        ), 
-        'class' => array($class),
-      );
+        ], 
+        'class' => [$class],
+      ];
     }
 
-    $output = [];
-    $output[] = array(
+    $build = [];
+    $build['member_login'] = [
       '#theme' => 'table',
       '#header' => $header,
       '#rows' => $rows,
-    );
-    $output[] = array('#type' => 'pager');
-    $output[] = array(
-      '#attached' => array('library' => array('member_login/member_login')),
-    );
-    return $output;
+      '#attached' => ['library' => ['member_login/member_login']],
+    ];
+
+    $build[] = ['#type' => 'pager'];
+
+    return $build;
   }
-  
+  /**
+   * Query the table.
+   *
+   * @parm array $header
+   * The table header.
+   */ 
   public function member_get_result($header = array()) {
 
     $query = $this->connection->select('member_login', 'm')
@@ -94,7 +99,7 @@ class Member extends ControllerBase {
       ->extend('\Drupal\Core\Database\Query\TableSortExtender');
     $query = $query
       ->fields('m', array())
-      ->limit(30)
+      ->limit(10)
       ->orderByHeader($header);
 
     $resource = $query->execute();

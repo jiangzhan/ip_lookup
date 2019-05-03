@@ -92,13 +92,12 @@ class Member extends ControllerBase {
    * @parm array $header
    * The table header.
    */ 
-  public function member_get_result($header = array()) {
-
+  public function member_get_result($header = []) {
     $query = $this->connection->select('member_login', 'm')
       ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
       ->extend('\Drupal\Core\Database\Query\TableSortExtender');
     $query = $query
-      ->fields('m', array())
+      ->fields('m')
       ->limit(10)
       ->orderByHeader($header);
 

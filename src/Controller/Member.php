@@ -30,7 +30,7 @@ class Member extends ControllerBase {
   /**
    * Constructs a current user object.
    *
-   * @para Drupal\Core\Session\AccountProxy $currentUser
+   * @param Drupal\Core\Session\AccountProxy $currentUser
    *   A current user.
    * @param \Drupal\Core\Database\Connection $connection
    *   A database connection for reading member_lgoin tabel.

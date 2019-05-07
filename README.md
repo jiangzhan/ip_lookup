@@ -7,4 +7,4 @@ Note: Current user font color will turn red.
 Install, and activate the module as you would any other module. As soon as the
 module is active, then logins will be recorded in your database.
 
-Note: After instllation the member login table will show on /admin/people/member-lgoin. 
+Note: After installation the member login table will show on /admin/people/member-login. 

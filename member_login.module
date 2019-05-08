@@ -17,7 +17,7 @@ function member_login_user_login($account) {
    * The data used to identify browsers and determine their capabilities requires consistent maintenance to keep up-to-date.
    * and also get_browser is slow.
    * Copied this getBrowser function from php documentation page https://www.php.net/manual/en/function.get-browser.php
-   * It's not fancy as other browsers detect library but it's enough for this module.
+   * It's not as fancy as other browsers detect library but it's enough for this module.
    */
   $browser = getBrowser();
 

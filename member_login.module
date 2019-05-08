@@ -10,7 +10,8 @@ use Drupal\member_login\UserAgent;
  */
 
 function member_login_user_login($account) {
-  $user_agent = new UserAgent;
+  $u_agent = $_SERVER['HTTP_USER_AGENT'];
+  $user_agent = new UserAgent($u_agent);
   $browser = $user_agent->getBrowser();
 
   $keys = [

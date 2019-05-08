@@ -30,7 +30,7 @@ class Member extends ControllerBase {
   /**
    * Constructs a current user object.
    *
-   * @param Drupal\Core\Session\AccountProxy $currentUser
+   * @para Drupal\Core\Session\AccountProxy $currentUser
    *   A current user.
    * @param \Drupal\Core\Database\Connection $connection
    *   A database connection for reading member_lgoin tabel.
@@ -60,6 +60,9 @@ class Member extends ControllerBase {
       ['data' => $this->t('Account Name'), 'field' => 'm.username'],
       ['data' => $this->t('Uid'), 'field' => 'm.uid'],
       ['data' => $this->t('Time'), 'field' => 'm.date', 'sort' => 'desc'],
+      ['data' => $this->t('Browser Name'), 'field' => 'm.browser_name'],
+      ['data' => $this->t('Browser Version'), 'field' => 'm.browser_version'],
+      ['data' => $this->t('Browser Platform'), 'field' => 'm.browser_platform'],
     ];
     $data = $this->member_get_result($header);
 
@@ -68,7 +71,12 @@ class Member extends ControllerBase {
       $class = $this->currentUser->id() == $value->uid ? 'current-member-login' : ''; 
       $rows[] = [
         'data' => [
-          $value->username, $value->uid, date("F j, Y, g:i a",$value->date)
+          $value->username, 
+          $value->uid, 
+          date("F j, Y, g:i a",$value->date),
+          $value->browser_name,
+          $value->browser_version,
+          $value->browser_platform,
         ], 
         'class' => [$class],
       ];

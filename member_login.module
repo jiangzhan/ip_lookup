@@ -4,11 +4,15 @@
  * The main module file.
  */
 
+use Drupal\member_login\UserAgent;
  /**
  * Implements hook_user_login().
  */
 
 function member_login_user_login($account) {
+  $user_agent = new UserAgent;
+  $browser = $user_agent->getBrowser();
+
   $keys = [
     'mlid' => null,
   ];
@@ -16,6 +20,9 @@ function member_login_user_login($account) {
     'uid' => $account->id(),
     'date' => time(),
     'username'=> $account->getDisplayName(),
+    'browser_name' => $browser['name'],
+    'browser_version' => $browser['version'],
+    'browser_platform' => $browser['platform'],
   ];
 
   \Drupal::database()->merge('member_login')

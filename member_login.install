@@ -3,40 +3,87 @@
  * implements hook_schema()
  */
 function member_login_schema() {
-  $schema['member_login'] = array(
+  $schema['member_login'] = [
     'description' => 'a table for member list',
-    'fields' => array(
-      'mlid' => array(
+    'fields' => [
+      'mlid' => [
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
-      ),
-      'uid' => array(
+      ],
+      'uid' => [
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => FALSE,
         'default' => NULL,
-      ),
-      'username' => array(
+      ],
+      'username' => [
         'type' => 'varchar',
         'length' => 255,
         'not null' => FALSE,
         'default' => '',
-      ),
-      'name' => array(
+      ],
+      'name' => [
         'type' => 'varchar',
         'length' => 255,
         'not null' => FALSE,
         'default' => '',
-      ),
-      'date' => array(
-        'description' => 'The Unix timestamp when the user logged in.',
+      ],
+      'date' => [
         'type' => 'int',
+        'description' => 'The Unix timestamp when the user logged in.',
         'not null' => TRUE,
         'default' => 0,
-      ),
-    ),    
-    'primary key' => array('mlid'),
-  );
+      ],
+      'browser_name' => [
+        'type' => 'varchar',
+        'description' => "The browser name",
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'browser_version' => [
+        'type' => 'varchar',
+        'description' => "The browser version",
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'browser_platform' => [
+        'type' => 'varchar',
+        'description' => "The browser platform",
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+    ],    
+    'primary key' => ['mlid'],
+  ];
   return $schema;
 } 
+
+
+function member_login_update_8001() {
+  $browser_name = [
+    'type' => 'varchar',
+    'description' => "The browser name",
+    'length' => 255,
+    'not null' => FALSE,
+  ]; 
+  
+  $browser_version = [
+    'type' => 'varchar',
+    'description' => "The browser version",
+    'length' => 255,
+    'not null' => FALSE,
+  ];
+  
+  $browser_platform = [
+    'type' => 'varchar',
+    'description' => "The browser platform",
+    'length' => 255,
+    'not null' => FALSE,
+  ];
+  $database = \Drupal::database(); 
+  
+  $database->schema()->addField('member_login', 'browser_name', $browser_name);
+  $database->schema()->addField('member_login', 'browser_version', $browser_name);
+  $database->schema()->addField('member_login', 'browser_platform', $browser_name);
+}

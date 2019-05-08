@@ -10,6 +10,15 @@ use Drupal\member_login\UserAgent;
  */
 
 function member_login_user_login($account) {
+  /**
+   * Didn't use get_browser function because it needs a browscap.ini file on the server side.
+   * Two disadvantage about putting browscap.ini on the server that I quote from Drupal browscap module.
+   * It can be difficult or impossible to configure for shared hosting environments.
+   * The data used to identify browsers and determine their capabilities requires consistent maintenance to keep up-to-date.
+   * and also get_browser is slow.
+   * Copied this getBrowser function from php documentation page https://www.php.net/manual/en/function.get-browser.php
+   * It's not fancy as other browsers detect library but it's enough for this module.
+   */
   $browser = getBrowser();
 
   $keys = [
@@ -31,79 +40,79 @@ function member_login_user_login($account) {
 }
 
 function getBrowser() {
-    $u_agent = $_SERVER['HTTP_USER_AGENT'];
-    $bname = 'Unknown';
-    $platform = 'Unknown';
-    $version= "";
+  $u_agent = $_SERVER['HTTP_USER_AGENT'];
+  $bname = 'Unknown';
+  $platform = 'Unknown';
+  $version= "";
 
     //First get the platform?
-    if (preg_match('/linux/i', $u_agent)) {
-      $platform = 'linux';
-    }
-    elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
-      $platform = 'mac';
-    }
-    elseif (preg_match('/windows|win32/i', $u_agent)) {
-      $platform = 'windows';
-    }
+  if (preg_match('/linux/i', $u_agent)) {
+    $platform = 'linux';
+  }
+  elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
+    $platform = 'mac';
+  }
+  elseif (preg_match('/windows|win32/i', $u_agent)) {
+    $platform = 'windows';
+  }
 
-    // Next get the name of the useragent yes seperately and for good reason
-    if (preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent)) {
-      $bname = 'Internet Explorer';
-      $ub = "MSIE";
-    }
-    elseif (preg_match('/Firefox/i',$u_agent)) {
-      $bname = 'Mozilla Firefox';
-      $ub = "Firefox";
-    }
-    elseif(preg_match('/Chrome/i',$u_agent)) {
-      $bname = 'Google Chrome';
-      $ub = "Chrome";
-    }
-    elseif(preg_match('/Safari/i',$u_agent)) {
-      $bname = 'Apple Safari';
-      $ub = "Safari";
-    }
-    elseif(preg_match('/Opera/i',$u_agent)) {
-      $bname = 'Opera';
-      $ub = "Opera";
-    }
-    elseif(preg_match('/Netscape/i',$u_agent)) {
-      $bname = 'Netscape';
-      $ub = "Netscape";
-    }
+  // Next get the name of the useragent yes seperately and for good reason
+  if (preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent)) {
+    $bname = 'Internet Explorer';
+    $ub = "MSIE";
+  }
+  elseif (preg_match('/Firefox/i',$u_agent)) {
+    $bname = 'Mozilla Firefox';
+    $ub = "Firefox";
+  }
+  elseif(preg_match('/Chrome/i',$u_agent)) {
+    $bname = 'Google Chrome';
+    $ub = "Chrome";
+  }
+  elseif(preg_match('/Safari/i',$u_agent)) {  
+    $bname = 'Apple Safari';
+    $ub = "Safari";
+  }
+  elseif(preg_match('/Opera/i',$u_agent)) {
+    $bname = 'Opera';
+    $ub = "Opera";
+  }
+  elseif(preg_match('/Netscape/i',$u_agent)) {
+    $bname = 'Netscape';
+    $ub = "Netscape";
+  }
 
-    // finally get the correct version number
-    $known = array('Version', $ub, 'other');
-    $pattern = '#(?<browser>' . join('|', $known) . ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
-    if (!preg_match_all($pattern, $u_agent, $matches)) {
-        // we have no matching number just continue
-    }
+  // finally get the correct version number
+  $known = array('Version', $ub, 'other');
+  $pattern = '#(?<browser>' . join('|', $known) . ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+  if (!preg_match_all($pattern, $u_agent, $matches)) {
+    // we have no matching number just continue
+  }
 
-    // see how many we have
-    $i = count($matches['browser']);
-    if ($i != 1) {
-      //we will have two since we are not using 'other' argument yet
-      //see if version is before or after the name
-      if (strripos($u_agent,"Version") < strripos($u_agent,$ub)){
-        $version= $matches['version'][0];
-      }
-      else {
-        $version= $matches['version'][1];
-      }
-    }
-    else {
+  // see how many we have
+  $i = count($matches['browser']);
+  if ($i != 1) {
+    //we will have two since we are not using 'other' argument yet
+    //see if version is before or after the name
+    if (strripos($u_agent,"Version") < strripos($u_agent,$ub)){
       $version= $matches['version'][0];
     }
-
-    // check if we have a number
-    if ($version==null || $version=="") {$version="?";}
-
-    return array(
-      'userAgent' => $u_agent,
-      'name'      => $bname,
-      'version'   => $version,
-      'platform'  => $platform,
-      'pattern'    => $pattern
-    );
+    else {
+      $version= $matches['version'][1];
+    }
   }
+  else {
+    $version= $matches['version'][0];
+  }
+
+  // check if we have a number
+  if ($version==null || $version=="") {$version="?";}
+
+  return array(
+    'userAgent' => $u_agent,
+    'name'      => $bname,
+    'version'   => $version,
+    'platform'  => $platform,
+    'pattern'    => $pattern
+  );
+}

@@ -73,7 +73,7 @@ class Member extends ControllerBase {
         'data' => [
           $value->username, 
           $value->uid, 
-          date("F j, Y, g:i a",$value->date),
+          date("F j, Y, g:i a", $value->date),
           $value->browser_name,
           $value->browser_version,
           $value->browser_platform,

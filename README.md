@@ -1,5 +1,5 @@
 # Member Login
-A simple module that tracks each time a user logs in and stores a historical browser, platform, browser version, last time login record into your database.
+A simple module that tracks each time a user logs in and stores browser name, platform, browser version, last time login and user ID into your database.
 
 
 Note: Current user font color will turn red.

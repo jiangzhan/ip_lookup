@@ -35,7 +35,6 @@ class Member extends ControllerBase {
    * @param \Drupal\Core\Database\Connection $connection
    *   A database connection for reading member_lgoin tabel.
    */
-
   public function __construct( AccountProxy $currentUser, Connection $connection ) {
     $this->currentUser = $currentUser;
     $this->connection  = $connection;
@@ -54,7 +53,6 @@ class Member extends ControllerBase {
   /**
    * A simple controller method to print member login table.
    */
-
   public function list() {
     $header = [
       ['data' => $this->t('Account Name'), 'field' => 'm.username'],
@@ -94,6 +92,7 @@ class Member extends ControllerBase {
 
     return $build;
   }
+
   /**
    * Query the table.
    *

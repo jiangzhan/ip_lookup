@@ -11,13 +11,7 @@ use Drupal\member_login\UserAgent;
 
 function member_login_user_login($account) {
   /**
-   * Didn't use get_browser function because it needs a browscap.ini file on the server side.
-   * Two disadvantage about putting browscap.ini on the server that I quote from Drupal browscap module.
-   * It can be difficult or impossible to configure for shared hosting environments.
-   * The data used to identify browsers and determine their capabilities requires consistent maintenance to keep up-to-date.
-   * and also get_browser is slow.
-   * Copied this getBrowser function from php documentation page https://www.php.net/manual/en/function.get-browser.php
-   * It's not as fancy as other browsers detect library but it's enough for this module.
+   * get browser name, version, and platform.
    */
   $browser = getBrowser();
 
@@ -38,6 +32,16 @@ function member_login_user_login($account) {
     ->fields($fields)
     ->execute();
 }
+
+/**
+ * Didn't use get_browser function because it needs a browscap.ini file on the server side.
+ * Two disadvantage about putting browscap.ini on the server that I quote from Drupal browscap module.
+ * It can be difficult or impossible to configure for shared hosting environments.
+ * The data used to identify browsers and determine their capabilities requires consistent maintenance to keep up-to-date.
+ * and also get_browser is slow.
+ * Copied this getBrowser function from php documentation page https://www.php.net/manual/en/function.get-browser.php
+ * It's not as fancy as other browsers detect library but it's enough for this module.
+ */
 
 function getBrowser() {
   $u_agent = $_SERVER['HTTP_USER_AGENT'];

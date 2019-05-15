@@ -59,31 +59,39 @@ function member_login_schema() {
   return $schema;
 } 
 
-
 function member_login_update_8001() {
   $browser_name = [
     'type' => 'varchar',
     'description' => "The browser name",
     'length' => 255,
     'not null' => FALSE,
-  ]; 
-  
+  ];
+
   $browser_version = [
     'type' => 'varchar',
     'description' => "The browser version",
     'length' => 255,
     'not null' => FALSE,
   ];
-  
+
   $browser_platform = [
     'type' => 'varchar',
     'description' => "The browser platform",
     'length' => 255,
     'not null' => FALSE,
   ];
-  $database = \Drupal::database(); 
-  
-  $database->schema()->addField('member_login', 'browser_name', $browser_name);
-  $database->schema()->addField('member_login', 'browser_version', $browser_name);
-  $database->schema()->addField('member_login', 'browser_platform', $browser_name);
+
+  $database = \Drupal::database();
+
+  if (!$database->schema()->fieldExists('member_login', 'browser_name')) {
+    $database->schema()->addField('member_login', 'browser_name', $browser_name);
+  }
+
+  if(!$database->schema()->fieldExists('member_login', 'browser_version')) {
+    $database->schema()->addField('member_login', 'browser_version', $browser_version);
+  }
+
+  if(!$database->schema()->fieldExists('member_login', 'browser_platform')) {
+    $database->schema()->addField('member_login', 'browser_platform', $browser_platform);
+  }
 }

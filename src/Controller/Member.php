@@ -44,10 +44,12 @@ class Member extends ControllerBase {
    * {@inheritdoc}
    */
   public static function create( ContainerInterface $container ) {
-    return new static(
+    $controller = new static(
       $container->get('current_user'),
       $container->get('database')
     );
+    $controller->setStringTranslation($container->get('string_translation'));
+    return $controller;
   }
   
   /**

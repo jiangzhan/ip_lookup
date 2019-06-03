@@ -14,6 +14,7 @@ function member_login_user_login($account) {
    * get browser name, version, and platform.
    */
   $browser = getBrowser();
+  $ip = \Drupal::service('member_login.clientip')->get_ip();
 
   $keys = [
     'mlid' => null,
@@ -27,11 +28,26 @@ function member_login_user_login($account) {
     'browser_platform' => $browser['platform'],
   ];
 
-  \Drupal::database()->merge('member_login')
-    ->key($keys)
-    ->fields($fields)
-    ->execute();
+  if (filter_var($ip, FILTER_VALIDATE_IP)) {
+    \Drupal::database()->merge('member_login')
+      ->key($keys)
+      ->fields($fields)
+      ->execute();
+  }
+
 }
+
+/**
+ * Implements hook_user_insert().
+ */
+function uiplog_user_insert($account) {
+
+  /**
+   * @todo add a log_ip funciton
+   * @todo example https://git.drupalcode.org/project/uiplog/blob/8.x-1.x/uiplog.module
+   */ 
+}
+
 
 /**
  * Didn't use get_browser function because it needs a browscap.ini file on the server side.

@@ -11,7 +11,7 @@ Put ipdata API key into the form and save configuration.
 
 You can get ipdata API key from [https://ipdata.co](https://ipdata.co/).
 
-ipdata provide a fast, highly available IP Geolocation API with reliable performance.
+Ipdata provide a fast, highly available IP Geolocation API with reliable performance.
 
 Default ipdata test key will let you lookup few ip Geolocation.
 

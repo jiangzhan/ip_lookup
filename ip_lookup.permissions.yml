@@ -1,0 +1,4 @@
+access iplookup table:
+  description: 'View user ip lookup information'
+  title: 'Access IP Lookup information'
+  restrict access: TRUE

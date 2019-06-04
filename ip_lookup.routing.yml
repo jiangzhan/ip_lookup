@@ -4,7 +4,7 @@ ip_lookup.ip_lookup:
     _title: 'User IP Lookup'
     _controller: '\Drupal\ip_lookup\Controller\IpLookup::list'
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'access iplookup table'
     _format: 'html'
 ip_lookup.api_settings_form:
   path: 'admin/config/ip-lookup/settings'
@@ -12,4 +12,4 @@ ip_lookup.api_settings_form:
     _form: '\Drupal\ip_lookup\Form\IpKeySettingsForm'
     _title: 'Set ipdata api key'
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'access iplookup table'

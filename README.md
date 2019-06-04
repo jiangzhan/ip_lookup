@@ -13,5 +13,7 @@ You can get ipdata API key from [https://ipdata.co](https://ipdata.co/).
 
 ipdata provide a fast, highly available IP Geolocation API with reliable performance.
 
+Default ipdata test key will let you lookup few ip Geolocation.
+
 
 Note: After installation the member login table will show on https://example.com/admin/people/member-login. 

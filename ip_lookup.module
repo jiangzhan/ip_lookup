@@ -12,7 +12,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
  */
 
 function ip_lookup_user_login($account) {
-  _ip_lookup_log_data($account->id()); 
+  _ip_lookup_log_data($account); 
 }
 
 /**
@@ -21,11 +21,11 @@ function ip_lookup_user_login($account) {
 function ip_lookup_user_insert($account) {
   $user = \Drupal::currentUser();
   if (!$user->id()) {
-    _ip_lookup_log_data($account->id());
+    _ip_lookup_log_data($account);
   }
 }
 
-function _ip_lookup_log_data($uid) {
+function _ip_lookup_log_data($account) {
   /**
    * get browser name, version, and platform.
    */
@@ -43,7 +43,7 @@ function _ip_lookup_log_data($uid) {
     'mlid' => null,
   ];
   $fields = [
-    'uid' => $uid,
+    'uid' => $account->id(),
     'date' => time(),
     'username'=> $account->getDisplayName(),
     'browser_name' => $browser['name'],

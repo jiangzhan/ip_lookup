@@ -3,5 +3,8 @@ services:
     class: Drupal\member_login\Controller\Member
     arguments: ['@current_user', '@database'] 
   member_login.clientip:
-    class: Drupal\member_login\ClientIp
+    class: Drupal\member_login\Resource\ClientIp
     arguments: ['@request_stack']
+  member_lgin.iplocation:
+    class: Drupal\member_login\Resource\Resource
+    arguments: ['@database','@member_login.clientip']

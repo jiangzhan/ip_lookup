@@ -63,6 +63,9 @@ class Member extends ControllerBase {
       ['data' => $this->t('Browser Name'), 'field' => 'm.browser_name'],
       ['data' => $this->t('Browser Version'), 'field' => 'm.browser_version'],
       ['data' => $this->t('Browser Platform'), 'field' => 'm.browser_platform'],
+      ['data' => $this->t('Ip'), 'field' => 'm.ip'],
+      ['data' => $this->t('City'), 'field' => 'm.city'],
+      ['data' => $this->t('Region'), 'field' => 'm.region'],
     ];
     $data = $this->member_get_result($header);
 
@@ -77,6 +80,9 @@ class Member extends ControllerBase {
           $value->browser_name,
           $value->browser_version,
           $value->browser_platform,
+          $value->ip,
+          $value->city,
+          $value->region,
         ], 
         'class' => [$class],
       ];
@@ -87,6 +93,7 @@ class Member extends ControllerBase {
       '#theme' => 'table',
       '#header' => $header,
       '#rows' => $rows,
+      '#attributes' => ['class' => ['member-login-table']],
       '#attached' => ['library' => ['member_login/member_login']],
     ];
 

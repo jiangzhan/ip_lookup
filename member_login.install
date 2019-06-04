@@ -53,6 +53,24 @@ function member_login_schema() {
         'length' => 255,
         'not null' => FALSE,
       ],
+      'ip' => [
+        'type' => 'varchar',
+        'description' => "Ip address",
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'city' => [
+        'type' => 'varchar',
+        'description' => "city",
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'region' => [
+        'type' => 'varchar',
+        'description' => "region",
+        'length' => 255,
+        'not null' => FALSE,
+      ],
     ],    
     'primary key' => ['mlid'],
   ];
@@ -95,3 +113,4 @@ function member_login_update_8001() {
     $database->schema()->addField('member_login', 'browser_platform', $browser_platform);
   }
 }
+

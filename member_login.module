@@ -4,7 +4,8 @@
  * The main module file.
  */
 
-use Drupal\member_login\UserAgent;
+use Drupal\member_login\Resource\Resource;
+
  /**
  * Implements hook_user_login().
  */
@@ -14,8 +15,15 @@ function member_login_user_login($account) {
    * get browser name, version, and platform.
    */
   $browser = getBrowser();
-  $ip = \Drupal::service('member_login.clientip')->get_ip();
 
+  $iplocation = \Drupal::service('member_lgin.iplocation');
+
+  if (!empty($iplocation->get_location_query())) {
+    $location = $iplocation->get_location_query();
+  } else {
+    $location = $iplocation->get_location();
+  }
+  
   $keys = [
     'mlid' => null,
   ];
@@ -26,15 +34,15 @@ function member_login_user_login($account) {
     'browser_name' => $browser['name'],
     'browser_version' => $browser['version'],
     'browser_platform' => $browser['platform'],
+    'ip' => $location['ip'],
+    'city' => $location['city'],
+    'region' => $location['region'],
   ];
 
-  if (filter_var($ip, FILTER_VALIDATE_IP)) {
-    \Drupal::database()->merge('member_login')
-      ->key($keys)
-      ->fields($fields)
-      ->execute();
-  }
-
+  \Drupal::database()->merge('member_login')
+    ->key($keys)
+    ->fields($fields)
+    ->execute();
 }
 
 /**
@@ -67,13 +75,13 @@ function getBrowser() {
 
     //First get the platform?
   if (preg_match('/linux/i', $u_agent)) {
-    $platform = 'linux';
+    $platform = 'Linux';
   }
   elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
-    $platform = 'mac';
+    $platform = 'Mac';
   }
   elseif (preg_match('/windows|win32/i', $u_agent)) {
-    $platform = 'windows';
+    $platform = 'Windows';
   }
 
   // Next get the name of the useragent yes seperately and for good reason

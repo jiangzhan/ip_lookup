@@ -1,5 +1,5 @@
 <?php
-namespace Drupal\member_login;
+namespace Drupal\member_login\Resource;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 

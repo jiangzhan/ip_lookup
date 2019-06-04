@@ -1,5 +1,6 @@
 # User IP Lookup
 A simple module that tracks each time a user logs in and stores browser name, platform, browser version, city, region  and user ID into your database.
+
 ![example](ip_lookup.png)
 
 ## Installation

@@ -16,4 +16,4 @@ Ipdata provide a fast, highly available IP Geolocation API with reliable perform
 Default ipdata test key will let you lookup few ip Geolocation.
 
 
-Note: User IP Lookup module links  https://example.com/admin/people/ip-lookup. 
+User IP Lookup module links  https://example.com/admin/people/ip-lookup. 

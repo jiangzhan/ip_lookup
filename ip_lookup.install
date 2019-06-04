@@ -2,9 +2,9 @@
 /**
  * implements hook_schema()
  */
-function member_login_schema() {
-  $schema['member_login'] = [
-    'description' => 'a table for member list',
+function ip_lookup_schema() {
+  $schema['ip_lookup'] = [
+    'description' => 'a table for user list',
     'fields' => [
       'mlid' => [
         'type' => 'serial',
@@ -77,7 +77,7 @@ function member_login_schema() {
   return $schema;
 } 
 
-function member_login_update_8001() {
+function ip_lookup_update_8001() {
   $browser_name = [
     'type' => 'varchar',
     'description' => "The browser name",
@@ -101,16 +101,16 @@ function member_login_update_8001() {
 
   $database = \Drupal::database();
 
-  if (!$database->schema()->fieldExists('member_login', 'browser_name')) {
-    $database->schema()->addField('member_login', 'browser_name', $browser_name);
+  if (!$database->schema()->fieldExists('ip_lookup', 'browser_name')) {
+    $database->schema()->addField('ip_lookup', 'browser_name', $browser_name);
   }
 
-  if(!$database->schema()->fieldExists('member_login', 'browser_version')) {
-    $database->schema()->addField('member_login', 'browser_version', $browser_version);
+  if(!$database->schema()->fieldExists('ip_lookup', 'browser_version')) {
+    $database->schema()->addField('ip_lookup', 'browser_version', $browser_version);
   }
 
-  if(!$database->schema()->fieldExists('member_login', 'browser_platform')) {
-    $database->schema()->addField('member_login', 'browser_platform', $browser_platform);
+  if(!$database->schema()->fieldExists('ip_lookup', 'browser_platform')) {
+    $database->schema()->addField('ip_lookup', 'browser_platform', $browser_platform);
   }
 }
 

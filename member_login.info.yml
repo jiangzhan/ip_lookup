@@ -1,5 +1,0 @@
-type: module
-name: Member Login
-description: List members login record.
-core: 8.x
-package: Custom

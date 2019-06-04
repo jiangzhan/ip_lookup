@@ -4,19 +4,19 @@
  * The main module file.
  */
 
-use Drupal\member_login\Resource\Resource;
+use Drupal\ip_lookup\Resource\Resource;
 
  /**
  * Implements hook_user_login().
  */
 
-function member_login_user_login($account) {
+function ip_lookup_user_login($account) {
   /**
    * get browser name, version, and platform.
    */
   $browser = getBrowser();
 
-  $iplocation = \Drupal::service('member_lgin.iplocation');
+  $iplocation = \Drupal::service('ip_lookup.iplocation');
 
   if (!empty($iplocation->get_location_query())) {
     $location = $iplocation->get_location_query();
@@ -39,7 +39,7 @@ function member_login_user_login($account) {
     'region' => $location['region'],
   ];
 
-  \Drupal::database()->merge('member_login')
+  \Drupal::database()->merge('ip_lookup')
     ->key($keys)
     ->fields($fields)
     ->execute();

@@ -1,16 +1,16 @@
 <?php
 
-namespace Drupal\member_login\Resource;
+namespace Drupal\ip_lookup\Resource;
 use Drupal\Core\Database\Connection;
-use Drupal\member_login\Resource\Environment;
-use Drupal\member_login\Resource\ClientIp;
+use Drupal\ip_lookup\Resource\Environment;
+use Drupal\ip_lookup\Resource\ClientIp;
 
 class Resource {
   
   /**
    * User IP
    *
-   * @var \Drupal\member_login\Resource
+   * @var \Drupal\ip_lookup\Resource
    */
    protected $ip;
   
@@ -26,7 +26,7 @@ class Resource {
    * Constructs resource object.
    *
    * @param \Drupal\Core\Database\Connection $connection
-   *   A database connection for reading member_lgoin tabel.
+   *   A database connection for reading ip_lookup tabel.
    */
   public function __construct(Connection $connection, ClientIp $ip ) {
     $this->connection  = $connection;
@@ -54,7 +54,7 @@ class Resource {
   }  
 
   public function get_location_query() {
-    $query = $this->connection->select('member_login', 'm')
+    $query = $this->connection->select('ip_lookup', 'm')
       ->fields('m')
       ->condition('m.ip', $this->ip, '=');
 

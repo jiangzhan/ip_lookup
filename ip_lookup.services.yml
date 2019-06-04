@@ -1,0 +1,10 @@
+services:  
+  ip_lookup:
+    class: Drupal\ip_lookup\Controller\Member
+    arguments: ['@current_user', '@database'] 
+  ip_lookup.clientip:
+    class: Drupal\ip_lookup\Resource\ClientIp
+    arguments: ['@request_stack']
+  ip_lookup.iplocation:
+    class: Drupal\ip_lookup\Resource\Resource
+    arguments: ['@database','@ip_lookup.clientip']

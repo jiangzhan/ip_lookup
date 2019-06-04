@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\member_login\Resource;
+namespace Drupal\ip_lookup\Resource;
 
 class Environment{
   protected static $url_stem = "https://api.ipdata.co";

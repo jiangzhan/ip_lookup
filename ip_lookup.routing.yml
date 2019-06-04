@@ -1,0 +1,15 @@
+ip_lookup.ip_lookup:
+  path: 'admin/people/ip-lookup'
+  defaults:
+    _title: 'User IP Lookup'
+    _controller: '\Drupal\ip_lookup\Controller\IpLookup::list'
+  requirements:
+    _permission: 'access administration pages'
+    _format: 'html'
+ip_lookup.api_settings_form:
+  path: 'admin/config/ip-lookup/settings'
+  defaults:
+    _form: '\Drupal\ip_lookup\Form\IpKeySettingsForm'
+    _title: 'Set ipdata api key'
+  requirements:
+    _permission: 'access administration pages'

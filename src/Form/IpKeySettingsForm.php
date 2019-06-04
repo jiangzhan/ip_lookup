@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\member_login\Form;
+namespace Drupal\ip_lookup\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -22,7 +22,7 @@ class IpKeySettingsForm extends ConfigFormBase {
   * {@inheritdoc}
   */
   public function getFormId() {
-    return 'member_login_settings';
+    return 'ip_lookup_settings';
   }
 
   /** 

@@ -1,0 +1,5 @@
+ip_lookup:
+  version: 1.x
+  css:
+    theme:
+      css/ip_lookup.css: {}

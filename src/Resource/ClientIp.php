@@ -1,5 +1,5 @@
 <?php
-namespace Drupal\member_login\Resource;
+namespace Drupal\ip_lookup\Resource;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 

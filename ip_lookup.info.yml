@@ -1,0 +1,5 @@
+type: module
+name: User IP Lookup
+description: List users login record.
+core: 8.x
+package: Custom

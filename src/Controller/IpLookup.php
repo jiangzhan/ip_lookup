@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\member_login\Controller;
+namespace Drupal\ip_lookup\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -8,10 +8,10 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Session\AccountProxy;
 
 /**
- * Provides the member login page.
+ * Provides the User IP Lookup page.
  */
 
-class Member extends ControllerBase {
+class IpLookup extends ControllerBase {
   
   /**
    * The current user.
@@ -33,7 +33,7 @@ class Member extends ControllerBase {
    * @param Drupal\Core\Session\AccountProxy $currentUser
    *   A current user.
    * @param \Drupal\Core\Database\Connection $connection
-   *   A database connection for reading member_lgoin tabel.
+   *   A database connection for reading ip_lookup tabel.
    */
   public function __construct( AccountProxy $currentUser, Connection $connection ) {
     $this->currentUser = $currentUser;
@@ -53,7 +53,7 @@ class Member extends ControllerBase {
   }
   
   /**
-   * A simple controller method to print member login table.
+   * A simple controller method to print user ip_lookup table.
    */
   public function list() {
     $header = [
@@ -67,11 +67,11 @@ class Member extends ControllerBase {
       ['data' => $this->t('City'), 'field' => 'm.city'],
       ['data' => $this->t('Region'), 'field' => 'm.region'],
     ];
-    $data = $this->member_get_result($header);
+    $data = $this->ip_lookup_get_result($header);
 
     $rows = [];
     foreach($data AS $value) {
-      $class = $this->currentUser->id() == $value->uid ? 'current-member-login' : ''; 
+      $class = $this->currentUser->id() == $value->uid ? 'current-user-ip-lookup' : ''; 
       $rows[] = [
         'data' => [
           $value->username, 
@@ -89,12 +89,12 @@ class Member extends ControllerBase {
     }
 
     $build = [];
-    $build['member_login'] = [
+    $build['ip_lookup'] = [
       '#theme' => 'table',
       '#header' => $header,
       '#rows' => $rows,
-      '#attributes' => ['class' => ['member-login-table']],
-      '#attached' => ['library' => ['member_login/member_login']],
+      '#attributes' => ['class' => ['ip-lookup-table']],
+      '#attached' => ['library' => ['ip_lookup/ip_lookup']],
     ];
 
     $build[] = ['#type' => 'pager'];
@@ -108,8 +108,8 @@ class Member extends ControllerBase {
    * @param array $header
    * The table header.
    */ 
-  public function member_get_result($header = []) {
-    $query = $this->connection->select('member_login', 'm')
+  public function ip_lookup_get_result($header = []) {
+    $query = $this->connection->select('ip_lookup', 'm')
       ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
       ->extend('\Drupal\Core\Database\Query\TableSortExtender');
     $query = $query

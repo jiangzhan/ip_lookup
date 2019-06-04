@@ -1,0 +1,5 @@
+ip_lookup.ip_lookup:
+  route_name: ip_lookup.ip_lookup
+  title: User IP Lookup
+  base_route: entity.user.collection
+  weight: 200

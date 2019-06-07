@@ -1,10 +1,18 @@
-# User IP Lookup
+
+INTRODUCTION
+------------
+
 A simple module that tracks each time a user logs in and stores browser name, platform, browser version, city, region  and user ID into your database.
 
 ![example](ip_lookup.png)
 
-## Installation
+INSTALLATION
+------------
+
 Install, and activate the module as you would any other module.
+
+CONFIGURATION
+-------------
 
 Go to configration page: https://example.com/admin/config/ip-lookup/settings.
 

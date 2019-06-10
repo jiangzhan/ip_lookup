@@ -66,7 +66,7 @@ class IpLookup extends ControllerBase {
       ['data' => $this->t('City'), 'field' => 'm.city'],
       ['data' => $this->t('Region'), 'field' => 'm.region'],
     ];
-    $data = $this->ip_lookup_get_result($header);
+    $data = $this->ipLookupGetResult($header);
 
     $rows = [];
     foreach ($data as $value) {
@@ -107,7 +107,7 @@ class IpLookup extends ControllerBase {
    * @param array $header
    *   The table header.
    */
-  public function ip_lookup_get_result($header = []) {
+  public function ipLookupGetResult(array $header = []) {
     $query = $this->connection->select('ip_lookup', 'm')
       ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
       ->extend('\Drupal\Core\Database\Query\TableSortExtender');

@@ -13,7 +13,10 @@ use Drupal\Core\Url;
 class IpKeySettingsForm extends ConfigFormBase {
 
   /**
- * @var string Config settings */
+   * Ipdata Api Key config.
+   *
+   * @var string Config settings 
+   */
   const SETTINGS = 'ipApikey.settings';
 
   /**
@@ -44,7 +47,7 @@ class IpKeySettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('ipdata API key'),
       '#default_value' => $config->get('api_key'),
-      '#description' => $this->t('Get ipdata api key from ') . $ipdata_link,
+      '#description' => $this->t('Get ipdata api key from @ipdata_link.', ['@ipdata_link' => $ipdata_link,])
     ];
 
     $form['markup'] = [

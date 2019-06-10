@@ -29,7 +29,7 @@ function _ip_lookup_log_data($account) {
   /**
    * get browser name, version, and platform.
    */
-  $browser = _getBrowser();
+  $browser = _ip_lookup_getBrowser();
 
   $iplocation = \Drupal::service('ip_lookup.iplocation');
 
@@ -91,7 +91,7 @@ function ip_lookup_help($route_name, RouteMatchInterface $route_match) {
  * It's not as fancy as other browsers detect library but it's enough for this module.
  */
 
-function _getBrowser() {
+function _ip_lookup_getBrowser() {
   $u_agent = $_SERVER['HTTP_USER_AGENT'];
   $bname = 'Unknown';
   $platform = 'Unknown';

@@ -46,11 +46,11 @@ class IpKeySettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('ipdata API key'),
       '#default_value' => $config->get('api_key'),
-      '#description' => 'Get ipdata api key from '. $ipdata_link,
+      '#description' => $this->t('Get ipdata api key from ') . $ipdata_link,
     ];
   
     $form['markup'] = [
-      '#markup' => $ipdata_link . ' is a fast, free, highly available IP Geolocation API with reliable performance.
+      '#markup' => $ipdata_link . ' is a fast, free, highly available IP Geolocation API with reliable performance.<br>
        Sing up to get a free api key, otherwide default testing key will apply.',
     ];
 

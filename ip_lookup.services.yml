@@ -7,4 +7,4 @@ services:
     arguments: ['@request_stack']
   ip_lookup.iplocation:
     class: Drupal\ip_lookup\Resource\Resource
-    arguments: ['@database','@ip_lookup.clientip']
+    arguments: ['@database','@ip_lookup.clientip','@config.factory']

@@ -1,10 +1,14 @@
 <?php
 
 namespace Drupal\ip_lookup\Resource;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\ip_lookup\Resource\Environment;
 use Drupal\ip_lookup\Resource\ClientIp;
 
+/**
+ *  ipdata Resource
+ */
 class Resource {
   
   /**
@@ -28,17 +32,19 @@ class Resource {
    * @param \Drupal\Core\Database\Connection $connection
    *   A database connection for reading ip_lookup tabel.
    */
-  public function __construct(Connection $connection, ClientIp $ip ) {
+  public function __construct(Connection $connection, ClientIp $ip, ConfigFactoryInterface $config_factory) {
     $this->connection  = $connection;
     $ip = $ip->get_ip();
     $this->ip = $ip;
+    $this->config = $config_factory;
   } 
 
   public function get_location() {
     // Get the config object
     $key = 'test';
-    $config = \Drupal::config('ipApikey.settings');
-    if (!$config->isNew()) {
+    //$config = \Drupal::config('ipApikey.settings');
+    $config = $this->config->get('ipApikey.settings');
+    if (!$config->isNew() && !empty($config->get('api_key'))) {
       // Get the key value
       $key = $config->get('api_key');
     }

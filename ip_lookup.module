@@ -33,10 +33,10 @@ function _ip_lookup_log_data($account) {
 
   $iplocation = \Drupal::service('ip_lookup.iplocation');
 
-  if (!empty($iplocation->get_location_query())) {
-    $location = $iplocation->get_location_query();
+  if (!empty($iplocation->getLocationQuery())) {
+    $location = $iplocation->getLocationQuery();
   } else {
-    $location = $iplocation->get_location();
+    $location = $iplocation->getLocation();
   }
 
   $keys = [

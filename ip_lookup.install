@@ -2,10 +2,11 @@
 
 /**
  * @file
+ * Install ip_lookup table to store User data.
  */
 
 /**
- * Implements hook_schema()
+ * Implements hook_schema().
  */
 function ip_lookup_schema() {
   $schema['ip_lookup'] = [
@@ -83,7 +84,7 @@ function ip_lookup_schema() {
 }
 
 /**
- *
+ * Table ip_lookup update 8001.
  */
 function ip_lookup_update_8001() {
   $browser_name = [

@@ -26,13 +26,11 @@ function ip_lookup_user_insert($account) {
 }
 
 /**
- *
+ * The function to get User Data.
  */
 function _ip_lookup_log_data($account) {
-  /**
-   * get browser name, version, and platform.
-   */
-  $browser = _ip_lookup_getBrowser();
+  // Get browser name, version, and platform.
+  $browser = _ip_lookup_get_browser();
 
   $iplocation = \Drupal::service('ip_lookup.iplocation');
 
@@ -86,15 +84,27 @@ function ip_lookup_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Didn't use get_browser function because it needs a browscap.ini file on the server side.
- * Two disadvantage about putting browscap.ini on the server that I quote from Drupal browscap module.
- * It can be difficult or impossible to configure for shared hosting environments.
- * The data used to identify browsers and determine their capabilities requires consistent maintenance to keep up-to-date.
- * and also get_browser is slow.
- * Copied this getBrowser function from php documentation page https://www.php.net/manual/en/function.get-browser.php
- * It's not as fancy as other browsers detect library but it's enough for this module.
+ * Didn't use get_browser function.
+ *
+ * Because it needs a browscap.ini file on the server side.
+ *
+ * Two disadvantage about putting browscap.ini on the server that
+ * I quote from Drupal browscap module.
+ *
+ * It can be difficult or impossible to configure for
+ * shared hosting environments.
+ *
+ * The data used to identify browsers
+ * and determine their capabilities requires consistent
+ * maintenance to keep up-to-date. and also get_browser is slow.
+ *
+ * Copied this getBrowser function from php documentation page
+ * https://www.php.net/manual/en/function.get-browser.php
+ *
+ * It's not as fancy as other browsers detect library
+ * but it's enough for this module.
  */
-function _ip_lookup_getBrowser() {
+function _ip_lookup_get_browser() {
   $u_agent = $_SERVER['HTTP_USER_AGENT'];
   $bname = 'Unknown';
   $platform = 'Unknown';
@@ -139,7 +149,7 @@ function _ip_lookup_getBrowser() {
 
   // Finally get the correct version number.
   $known = ['Version', $ub, 'other'];
-  $pattern = '#(?<browser>' . join('|', $known) . ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+  $pattern = '#(?<browser>' . implode('|', $known) . ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
   if (!preg_match_all($pattern, $u_agent, $matches)) {
     // We have no matching number just continue.
   }

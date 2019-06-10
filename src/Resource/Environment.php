@@ -7,6 +7,7 @@ namespace Drupal\ip_lookup\Resource;
  */
 class Environment {
   protected static $urlStem = "https://api.ipdata.co";
+
   /**
    * Get base url.
    */

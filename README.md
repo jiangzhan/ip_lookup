@@ -28,3 +28,8 @@ Default ipdata test key will let you lookup few ip Geolocation.
 
 
 User IP Lookup table links  https://example.com/admin/people/ip-lookup. 
+
+REQUIREMENTS
+-------------
+
+No special requirements.

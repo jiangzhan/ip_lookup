@@ -8,7 +8,7 @@ use Drupal\Core\Database\Connection;
 /**
  * Ipdata Resource.
  */
-class Resource { 
+class Resource {
 
   /**
    * User IP.
@@ -61,6 +61,7 @@ class Resource {
     $output['region'] = $details->region;
     return $output;
   }
+
   /**
    * Query ip_lookup table with user IP.
    */

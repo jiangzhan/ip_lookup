@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class ClientIp {
   /**
+   * Symfony Request.
+   *
    * @var \Symfony\Component\HttpFoundation\Request
    */
   protected $request;
@@ -22,12 +24,13 @@ class ClientIp {
   public function __construct(RequestStack $request_stack) {
     $this->request = $request_stack->getCurrentRequest();
   }
+
   /**
    * Get User IP.
    */
   public function getIp() {
     $ip = $this->request->getClientIp();
-    return $ip;    
+    return $ip;
   }
 
 }

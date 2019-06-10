@@ -1,18 +1,18 @@
 <?php
+
 /**
  * @file
  * The main module file.
  */
 
-//use Drupal\ip_lookup\Resource\Resource;
+// Use Drupal\ip_lookup\Resource\Resource;.
 use Drupal\Core\Routing\RouteMatchInterface;
 
- /**
+/**
  * Implements hook_user_login().
  */
-
 function ip_lookup_user_login($account) {
-  _ip_lookup_log_data($account); 
+  _ip_lookup_log_data($account);
 }
 
 /**
@@ -25,6 +25,9 @@ function ip_lookup_user_insert($account) {
   }
 }
 
+/**
+ *
+ */
 function _ip_lookup_log_data($account) {
   /**
    * get browser name, version, and platform.
@@ -35,17 +38,18 @@ function _ip_lookup_log_data($account) {
 
   if (!empty($iplocation->getLocationQuery())) {
     $location = $iplocation->getLocationQuery();
-  } else {
+  }
+  else {
     $location = $iplocation->getLocation();
   }
 
   $keys = [
-    'mlid' => null,
+    'mlid' => NULL,
   ];
   $fields = [
     'uid' => $account->id(),
     'date' => time(),
-    'username'=> $account->getDisplayName(),
+    'username' => $account->getDisplayName(),
     'browser_name' => $browser['name'],
     'browser_version' => $browser['version'],
     'browser_platform' => $browser['platform'],
@@ -59,10 +63,10 @@ function _ip_lookup_log_data($account) {
     ->fields($fields)
     ->execute();
 }
+
 /**
  * Implements hook_help().
  */
-
 function ip_lookup_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     // Main module help for the ip_lookup module.
@@ -70,13 +74,13 @@ function ip_lookup_help($route_name, RouteMatchInterface $route_match) {
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('A simple module that tracks each time a user logs in and stores browser name, platform, browser version, city, region and user ID into your database.') . '</p>';
-      $output .= '<p>' . t('Go to configration <a href="/admin/config/ip-lookup/settings">page</a>.') .'<p>';
-      $output .= '<p>' . t('Put ipdata API key into the form and save configuration.(default key is test)') .'<p>';
-      $output .= '<p>' . t('You can get ipdata API key from <a href="https://ipdata.co/" target="_blank">https://ipdata.co/</a>.') .'<p>';
-      $output .= '<p>' . t('Ipdata provide a fast, highly available IP Geolocation API with reliable performance.') .'<p>';
-      $output .= '<p>' . t('Default ipdata test key will let you lookup few ip Geolocation.') .'<p>';
-      $output .= '<p>' . t('User IP lookup table will show up under the Manage -> People and then <a href="/admin/people/ip-lookup">User IP Lookup tab</a>.') .'<p>';
-      $output .= '<p>' . t('github: <a href="https://github.com/jiangzhan/ip_lookup" target="_blank">https://github.com/jiangzhan/ip_lookup</a>') .'<p>';
+      $output .= '<p>' . t('Go to configration <a href="/admin/config/ip-lookup/settings">page</a>.') . '<p>';
+      $output .= '<p>' . t('Put ipdata API key into the form and save configuration.(default key is test)') . '<p>';
+      $output .= '<p>' . t('You can get ipdata API key from <a href="https://ipdata.co/" target="_blank">https://ipdata.co/</a>.') . '<p>';
+      $output .= '<p>' . t('Ipdata provide a fast, highly available IP Geolocation API with reliable performance.') . '<p>';
+      $output .= '<p>' . t('Default ipdata test key will let you lookup few ip Geolocation.') . '<p>';
+      $output .= '<p>' . t('User IP lookup table will show up under the Manage -> People and then <a href="/admin/people/ip-lookup">User IP Lookup tab</a>.') . '<p>';
+      $output .= '<p>' . t('github: <a href="https://github.com/jiangzhan/ip_lookup" target="_blank">https://github.com/jiangzhan/ip_lookup</a>') . '<p>';
       return $output;
   }
 }
@@ -90,14 +94,13 @@ function ip_lookup_help($route_name, RouteMatchInterface $route_match) {
  * Copied this getBrowser function from php documentation page https://www.php.net/manual/en/function.get-browser.php
  * It's not as fancy as other browsers detect library but it's enough for this module.
  */
-
 function _ip_lookup_getBrowser() {
   $u_agent = $_SERVER['HTTP_USER_AGENT'];
   $bname = 'Unknown';
   $platform = 'Unknown';
-  $version= "";
+  $version = "";
 
-    //First get the platform?
+  // First get the platform?
   if (preg_match('/linux/i', $u_agent)) {
     $platform = 'Linux';
   }
@@ -108,63 +111,65 @@ function _ip_lookup_getBrowser() {
     $platform = 'Windows';
   }
 
-  // Next get the name of the useragent yes seperately and for good reason
-  if (preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent)) {
+  // Next get the name of the useragent yes seperately and for good reason.
+  if (preg_match('/MSIE/i', $u_agent) && !preg_match('/Opera/i', $u_agent)) {
     $bname = 'Internet Explorer';
     $ub = "MSIE";
   }
-  elseif (preg_match('/Firefox/i',$u_agent)) {
+  elseif (preg_match('/Firefox/i', $u_agent)) {
     $bname = 'Mozilla Firefox';
     $ub = "Firefox";
   }
-  elseif(preg_match('/Chrome/i',$u_agent)) {
+  elseif (preg_match('/Chrome/i', $u_agent)) {
     $bname = 'Google Chrome';
     $ub = "Chrome";
   }
-  elseif(preg_match('/Safari/i',$u_agent)) {  
+  elseif (preg_match('/Safari/i', $u_agent)) {
     $bname = 'Apple Safari';
     $ub = "Safari";
   }
-  elseif(preg_match('/Opera/i',$u_agent)) {
+  elseif (preg_match('/Opera/i', $u_agent)) {
     $bname = 'Opera';
     $ub = "Opera";
   }
-  elseif(preg_match('/Netscape/i',$u_agent)) {
+  elseif (preg_match('/Netscape/i', $u_agent)) {
     $bname = 'Netscape';
     $ub = "Netscape";
   }
 
-  // finally get the correct version number
-  $known = array('Version', $ub, 'other');
+  // Finally get the correct version number.
+  $known = ['Version', $ub, 'other'];
   $pattern = '#(?<browser>' . join('|', $known) . ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
   if (!preg_match_all($pattern, $u_agent, $matches)) {
-    // we have no matching number just continue
+    // We have no matching number just continue.
   }
 
-  // see how many we have
+  // See how many we have.
   $i = count($matches['browser']);
   if ($i != 1) {
-    //we will have two since we are not using 'other' argument yet
-    //see if version is before or after the name
-    if (strripos($u_agent,"Version") < strripos($u_agent,$ub)){
-      $version= $matches['version'][0];
+    // We will have two since we are not using 'other' argument yet
+    // see if version is before or after the name.
+    if (strripos($u_agent, "Version") < strripos($u_agent, $ub)) {
+      $version = $matches['version'][0];
     }
     else {
-      $version= $matches['version'][1];
+      $version = $matches['version'][1];
     }
   }
   else {
-    $version= $matches['version'][0];
+    $version = $matches['version'][0];
   }
 
-  // check if we have a number
-  if ($version==null || $version=="") {$version="?";}
+  // Check if we have a number.
+  if ($version == NULL || $version == "") {
+    $version = "?";
+  }
 
-  return array(
+  return [
     'userAgent' => $u_agent,
     'name'      => $bname,
     'version'   => $version,
     'platform'  => $platform,
-    'pattern'    => $pattern
-  );
+    'pattern'    => $pattern,
+  ];
 }

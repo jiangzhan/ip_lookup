@@ -1,6 +1,11 @@
 <?php
+
 /**
- * implements hook_schema()
+ * @file
+ */
+
+/**
+ * Implements hook_schema()
  */
 function ip_lookup_schema() {
   $schema['ip_lookup'] = [
@@ -71,12 +76,15 @@ function ip_lookup_schema() {
         'length' => 255,
         'not null' => FALSE,
       ],
-    ],    
+    ],
     'primary key' => ['mlid'],
   ];
   return $schema;
-} 
+}
 
+/**
+ *
+ */
 function ip_lookup_update_8001() {
   $browser_name = [
     'type' => 'varchar',
@@ -105,12 +113,11 @@ function ip_lookup_update_8001() {
     $database->schema()->addField('ip_lookup', 'browser_name', $browser_name);
   }
 
-  if(!$database->schema()->fieldExists('ip_lookup', 'browser_version')) {
+  if (!$database->schema()->fieldExists('ip_lookup', 'browser_version')) {
     $database->schema()->addField('ip_lookup', 'browser_version', $browser_version);
   }
 
-  if(!$database->schema()->fieldExists('ip_lookup', 'browser_platform')) {
+  if (!$database->schema()->fieldExists('ip_lookup', 'browser_platform')) {
     $database->schema()->addField('ip_lookup', 'browser_platform', $browser_platform);
   }
 }
-

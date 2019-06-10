@@ -10,13 +10,12 @@ use Drupal\Core\Session\AccountProxy;
 /**
  * Provides the User IP Lookup page.
  */
-
 class IpLookup extends ControllerBase {
-  
+
   /**
    * The current user.
    *
-   * @var Drupal\Core\Session\AccountProxy;
+   * @var Drupal\Core\Session\AccountProxy
    */
   protected $currentUser;
 
@@ -26,7 +25,7 @@ class IpLookup extends ControllerBase {
    * @var \Drupal\Core\Database\Connection
    */
   protected $connection;
-  
+
   /**
    * Constructs a current user object.
    *
@@ -35,15 +34,15 @@ class IpLookup extends ControllerBase {
    * @param \Drupal\Core\Database\Connection $connection
    *   A database connection for reading ip_lookup tabel.
    */
-  public function __construct( AccountProxy $currentUser, Connection $connection ) {
+  public function __construct(AccountProxy $currentUser, Connection $connection) {
     $this->currentUser = $currentUser;
-    $this->connection  = $connection;
+    $this->connection = $connection;
   }
-  
+
   /**
    * {@inheritdoc}
    */
-  public static function create( ContainerInterface $container ) {
+  public static function create(ContainerInterface $container) {
     $controller = new static(
       $container->get('current_user'),
       $container->get('database')
@@ -51,7 +50,7 @@ class IpLookup extends ControllerBase {
     $controller->setStringTranslation($container->get('string_translation'));
     return $controller;
   }
-  
+
   /**
    * A simple controller method to print user ip_lookup table.
    */
@@ -70,12 +69,12 @@ class IpLookup extends ControllerBase {
     $data = $this->ip_lookup_get_result($header);
 
     $rows = [];
-    foreach($data AS $value) {
-      $class = $this->currentUser->id() == $value->uid ? 'current-user-ip-lookup' : ''; 
+    foreach ($data as $value) {
+      $class = $this->currentUser->id() == $value->uid ? 'current-user-ip-lookup' : '';
       $rows[] = [
         'data' => [
-          $value->username, 
-          $value->uid, 
+          $value->username,
+          $value->uid,
           date("F j, Y, g:i a", $value->date),
           $value->browser_name,
           $value->browser_version,
@@ -83,7 +82,7 @@ class IpLookup extends ControllerBase {
           $value->ip,
           $value->city,
           $value->region,
-        ], 
+        ],
         'class' => [$class],
       ];
     }
@@ -106,8 +105,8 @@ class IpLookup extends ControllerBase {
    * Query the table.
    *
    * @param array $header
-   * The table header.
-   */ 
+   *   The table header.
+   */
   public function ip_lookup_get_result($header = []) {
     $query = $this->connection->select('ip_lookup', 'm')
       ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
@@ -121,4 +120,5 @@ class IpLookup extends ControllerBase {
     $result = $resource->fetchAll();
     return $result;
   }
+
 }

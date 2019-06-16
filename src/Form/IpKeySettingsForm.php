@@ -51,8 +51,8 @@ class IpKeySettingsForm extends ConfigFormBase {
     ];
 
     $form['markup'] = [
-      '#markup' => $ipdata_link . ' is a fast, free, highly available IP Geolocation API with reliable performance.<br>
-       Sing up to get a free api key, otherwide default testing key will apply.',
+      '#markup' => $this->t('@ipdata_link is a fast, free, highly available IP Geolocation API with reliable performance.<br>
+       Sing up to get a free api key, otherwide default testing key will apply.', ['@ipdata_link' => $ipdata_link]),
     ];
 
     return parent::buildForm($form, $form_state);

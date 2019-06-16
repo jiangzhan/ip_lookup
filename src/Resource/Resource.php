@@ -3,6 +3,7 @@
 namespace Drupal\ip_lookup\Resource;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\Database\Connection;
 
 /**
@@ -11,11 +12,11 @@ use Drupal\Core\Database\Connection;
 class Resource {
 
   /**
-   * User IP.
+   * The request stack.
    *
-   * @var \Drupal\ip_lookup\Resource
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  protected $ip;
+  protected $requestStack;
 
   /**
    * The database connection.
@@ -29,14 +30,14 @@ class Resource {
    *
    * @param \Drupal\Core\Database\Connection $connection
    *   A database connection for reading ip_lookup tabel.
-   * @param \Drupal\ip_lookup\Resource\ClientIp $ip
-   *   Symfony Request::getClientIP.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   *   The request stack.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
    */
-  public function __construct(Connection $connection, ClientIp $ip, ConfigFactoryInterface $config_factory) {
+  public function __construct(Connection $connection, RequestStack $requestStack, ConfigFactoryInterface $config_factory) {
     $this->connection = $connection;
-    $this->ip = $ip->getIp();
+    $this->requestStack = $requestStack;
     $this->config = $config_factory;
   }
 
@@ -44,6 +45,9 @@ class Resource {
    * User ipdata endpoint to get user Location.
    */
   public function getLocation() {
+    // Get user IP.
+    $ip = $this->getIp();
+
     // Get the config object.
     $key = 'test';
     $config = $this->config->get('ipApikey.settings');
@@ -52,7 +56,7 @@ class Resource {
       $key = $config->get('api_key');
     }
     $base = Environment::getUrlStem();
-    $url = $base . $this->ip . '?' . "api-key=$key";
+    $url = $base . $ip . '?' . "api-key=$key";
     $details = json_decode(file_get_contents($url));
 
     $output = [];
@@ -66,13 +70,23 @@ class Resource {
    * Query ip_lookup table with user IP.
    */
   public function getLocationQuery() {
+    $ip = $this->getIp();
     $query = $this->connection->select('ip_lookup', 'm')
       ->fields('m')
-      ->condition('m.ip', $this->ip, '=');
+      ->condition('m.ip', $ip, '=');
 
     $resource = $query->execute();
     $result = $resource->fetchAssoc();
     return $result;
+  }
+
+  /**
+   * Get User IP.
+   */
+  protected function getIp() {
+    $request = $this->requestStack->getCurrentRequest();
+    $ip = $request->getClientIp();
+    return $ip;
   }
 
 }

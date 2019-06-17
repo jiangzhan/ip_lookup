@@ -26,19 +26,26 @@ class Resource {
   protected $connection;
 
   /**
+   * Drupal\Core\Config\ConfigFactoryInterface definition.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
    * Constructs resource object.
    *
    * @param \Drupal\Core\Database\Connection $connection
    *   A database connection for reading ip_lookup tabel.
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   The request stack.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The config factory.
    */
-  public function __construct(Connection $connection, RequestStack $requestStack, ConfigFactoryInterface $config_factory) {
+  public function __construct(Connection $connection, RequestStack $requestStack, ConfigFactoryInterface $configFactory) {
     $this->connection = $connection;
     $this->requestStack = $requestStack;
-    $this->config = $config_factory;
+    $this->configFactory = $configFactory;
   }
 
   /**
@@ -50,7 +57,7 @@ class Resource {
 
     // Get the config object.
     $key = 'test';
-    $config = $this->config->get('ipApikey.settings');
+    $config = $this->configFactory->get('ipApikey.settings');
     if (!$config->isNew() && !empty($config->get('api_key'))) {
       // Get the key value.
       $key = $config->get('api_key');

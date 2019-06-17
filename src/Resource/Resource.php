@@ -37,15 +37,15 @@ class Resource {
    *
    * @param \Drupal\Core\Database\Connection $connection
    *   A database connection for reading ip_lookup tabel.
-   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   The request stack.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
    */
-  public function __construct(Connection $connection, RequestStack $requestStack, ConfigFactoryInterface $configFactory) {
+  public function __construct(Connection $connection, RequestStack $request_stack, ConfigFactoryInterface $config_factory) {
     $this->connection = $connection;
-    $this->requestStack = $requestStack;
-    $this->configFactory = $configFactory;
+    $this->requestStack = $request_stack;
+    $this->configFactory = $config_factory;
   }
 
   /**

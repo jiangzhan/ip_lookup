@@ -29,13 +29,13 @@ class IpLookup extends ControllerBase {
   /**
    * Constructs a current user object.
    *
-   * @param Drupal\Core\Session\AccountProxy $currentUser
+   * @param Drupal\Core\Session\AccountProxy $current_user
    *   A current user.
    * @param \Drupal\Core\Database\Connection $connection
    *   A database connection for reading ip_lookup tabel.
    */
-  public function __construct(AccountProxy $currentUser, Connection $connection) {
-    $this->currentUser = $currentUser;
+  public function __construct(AccountProxy $current_user, Connection $connection) {
+    $this->currentUser = $current_user;
     $this->connection = $connection;
   }
 

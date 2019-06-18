@@ -1,0 +1,3 @@
+ipApikey.settings:
+  type: string
+  label: 'Ipdata APIkey'

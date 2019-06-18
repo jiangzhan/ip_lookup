@@ -98,7 +98,7 @@ class Resource {
         return $body;
       }
     }
-    catch(RequestException $e) {
+    catch (RequestException $e) {
       watchdog_exception('ip_lookup', $e);
     }
   }
